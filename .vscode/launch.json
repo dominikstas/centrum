@@ -7,9 +7,9 @@
       "request": "launch",
       "args": [],
       "stopAtEntry": false,
-      "externalConsole": false,
-      "cwd": "/home/Dominik/projekty/centrum",
-      "program": "/home/Dominik/projekty/centrum/build/Debug/outDebug",
+      "externalConsole": true,
+      "cwd": "c:/Users/domin/projekty/centrum",
+      "program": "c:/Users/domin/projekty/centrum/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
