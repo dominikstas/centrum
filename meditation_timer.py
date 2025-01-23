@@ -4,12 +4,10 @@ from styles import set_custom_style, create_rounded_button
 from pygame import mixer
 
 class MeditationApp:
-    def __init__(self, root):
+    def __init__(self, root, parent_frame):
         self.root = root
-        self.root.title("Meditation Stopwatch")
-        self.root.geometry("500x600")
-        self.root.configure(bg="#f0f0f0")
-
+        self.parent_frame = parent_frame
+        
         set_custom_style()
         
         self.elapsed_time = 0
@@ -21,17 +19,15 @@ class MeditationApp:
         self.create_widgets()
     
     def create_widgets(self):
-        main_frame = ttk.Frame(self.root, padding="20")
-        main_frame.grid(row=0, column=0, sticky="nsew")
-        main_frame.columnconfigure(0, weight=1)
+        self.parent_frame.columnconfigure(0, weight=1)
         
         # Timer display
-        self.timer_label = ttk.Label(main_frame, text="00:00:00", style="Timer.TLabel")
-        self.timer_label.grid(row=0, column=0, pady=(0, 20))
+        self.timer_label = ttk.Label(self.parent_frame, text="00:00:00", style="Timer.TLabel")
+        self.timer_label.grid(row=1, column=0, pady=(40, 20))
         
         # Controls frame
-        controls_frame = ttk.Frame(main_frame)
-        controls_frame.grid(row=1, column=0, pady=20)
+        controls_frame = ttk.Frame(self.parent_frame)
+        controls_frame.grid(row=2, column=0, pady=20)
         
         self.start_button = create_rounded_button(controls_frame, "Start", self.toggle_timer)
         self.start_button.grid(row=0, column=0, padx=10)
@@ -40,8 +36,8 @@ class MeditationApp:
         self.reset_button.grid(row=0, column=1)
         
         # Last session frame
-        self.last_session_frame = ttk.Frame(main_frame)
-        self.last_session_frame.grid(row=2, column=0, pady=20)
+        self.last_session_frame = ttk.Frame(self.parent_frame)
+        self.last_session_frame.grid(row=3, column=0, pady=20)
         
         self.last_session_label = ttk.Label(
             self.last_session_frame, 
@@ -49,10 +45,6 @@ class MeditationApp:
             style="Config.TLabel"
         )
         self.last_session_label.grid(row=0, column=0)
-        
-        # Configure grid
-        self.root.columnconfigure(0, weight=1)
-        self.root.rowconfigure(0, weight=1)
     
     def toggle_timer(self):
         if self.is_meditating:

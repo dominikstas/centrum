@@ -1,30 +1,11 @@
-# pomodoro_timer.py
 import tkinter as tk
 from tkinter import ttk, messagebox
 from styles import set_custom_style, create_rounded_button
 
 class PomodoroApp:
-    def __init__(self, root):
+    def __init__(self, root, parent_frame):
         self.root = root
-        self.root.title("Pomodoro Timer & To-Do List")
-        self.root.geometry("500x700")
-        self.root.configure(bg="#f0f0f0")
-
-        set_custom_style()
-
-        self.pomodoro_work_time = 25 * 60
-        self.pomodoro_break_time = 5 * 60
-        
-        self.is_working = False
-        self.time_left = self.pomodoro_work_time
-        
-        self.create_widgets()
-class PomodoroApp:
-    def __init__(self, root):
-        self.root = root
-        self.root.title("Pomodoro Timer & To-Do List")
-        self.root.geometry("500x700")
-        self.root.configure(bg="#f0f0f0")
+        self.parent_frame = parent_frame
 
         set_custom_style()
 
@@ -37,16 +18,11 @@ class PomodoroApp:
         self.create_widgets()
 
     def create_widgets(self):
-        self.root.columnconfigure(0, weight=1)
-        self.root.rowconfigure(0, weight=1)
-
-        main_frame = ttk.Frame(self.root, padding="20", style="TFrame")
-        main_frame.grid(row=0, column=0, sticky="nsew")
-        main_frame.columnconfigure(0, weight=1)
+        self.parent_frame.columnconfigure(0, weight=1)
         
         # Timer section
-        timer_frame = ttk.Frame(main_frame, style="TFrame")
-        timer_frame.grid(row=0, column=0, sticky="ew", pady=(0, 20))
+        timer_frame = ttk.Frame(self.parent_frame, style="TFrame")
+        timer_frame.grid(row=1, column=0, sticky="ew", pady=(40, 20))
         timer_frame.columnconfigure(0, weight=1)
 
         self.timer_label = ttk.Label(timer_frame, text="25:00", style="Timer.TLabel", anchor="center")
@@ -64,8 +40,8 @@ class PomodoroApp:
         self.reset_button.grid(row=0, column=1)
 
         # Configuration section
-        config_frame = ttk.Frame(main_frame, style="TFrame")
-        config_frame.grid(row=1, column=0, sticky="ew", pady=20)
+        config_frame = ttk.Frame(self.parent_frame, style="TFrame")
+        config_frame.grid(row=2, column=0, sticky="ew", pady=20)
         config_frame.columnconfigure((0, 2), weight=1)
 
         ttk.Label(config_frame, text="Work Time (min):", style="Config.TLabel").grid(row=0, column=0, sticky="w")
@@ -82,8 +58,8 @@ class PomodoroApp:
         self.save_button.grid(row=1, column=0, columnspan=4, pady=(10, 0))
 
         # To-Do List section
-        todo_frame = ttk.Frame(main_frame, style="TFrame")
-        todo_frame.grid(row=2, column=0, sticky="nsew")
+        todo_frame = ttk.Frame(self.parent_frame, style="TFrame")
+        todo_frame.grid(row=3, column=0, sticky="nsew")
         todo_frame.columnconfigure(0, weight=1)
 
         ttk.Label(todo_frame, text="To-Do List", font=("Helvetica", 16, "bold"), style="TLabel").grid(row=0, column=0, pady=(0, 10))
@@ -160,4 +136,3 @@ class PomodoroApp:
         if task:
             self.todo_listbox.insert(tk.END, task)
             self.add_todo_entry.delete(0, tk.END)
-
